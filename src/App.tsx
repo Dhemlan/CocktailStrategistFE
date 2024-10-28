@@ -7,6 +7,7 @@ import { NewDrink } from './components/Drinks/NewDrink'
 import { PageTemplate } from './components/PageTemplate'
 import { EditDrink } from './components/Drinks/EditDrink'
 import { CustomDrinks } from './components/Drinks/CustomDrinks'
+import { NewIngredient } from './components/Ingredients/NewIngredient'
 
 function App() {
 
@@ -20,7 +21,8 @@ function App() {
       element: <IngredientPanel />
     },
     {
-      path:"/addIngredient"
+      path:"/addIngredient",
+      element: <NewIngredient />
     },
     {
       path:"/customDrinks",

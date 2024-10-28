@@ -1,5 +1,6 @@
 import { QueryClient } from "@tanstack/react-query";
 import { DrinkModel } from "./models/DrinkModel";
+import { IngredientModel } from "./models/IngredientModel";
 
 export const queryClient = new QueryClient()
 
@@ -14,6 +15,22 @@ export async function fetchIngredients(){
     const resData = await response.json();
     return resData
 }
+
+export async function createIngredient(ingredientData: IngredientModel){
+  const response = await fetch(`${BASE_URL}/ingredient`, {
+      method: "POST",
+      body: JSON.stringify(ingredientData),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    if (!response.ok) {
+      handleError("An error occurred while adding the ingredient");
+    }  
+    const { ingredient } = await response.json();
+    return ingredient;
+}
+
 export async function fetchDrink(id: string){
     const response = await fetch(`${BASE_URL}/drink/${id}`);
     if (!response.ok){
