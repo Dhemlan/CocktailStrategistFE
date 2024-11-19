@@ -1,10 +1,12 @@
 import { useQuery } from "@tanstack/react-query";
 import { DrinkModel } from "../../models/DrinkModel";
 import ModalButtonGroup from "../../UI/ModalButtonGroup";
-import { IngredientModel } from "../../models/IngredientModel";
+import {
+  IngredientCategory,
+  IngredientModel,
+} from "../../models/IngredientModel";
 import { fetchIngredients } from "../../http";
-import { SubmitHandler, useFieldArray, useForm } from "react-hook-form";
-import { isDebuggerStatement } from "typescript";
+import { SubmitHandler, useForm } from "react-hook-form";
 
 export interface DrinkFormProps {
   drink: DrinkModel;
@@ -34,7 +36,7 @@ export function DrinkForm({ drink, onSubmit, onDelete }: DrinkFormProps) {
     await new Promise((resolve) => setTimeout(resolve, 1000));
     data.ingredients = data.ingredients.flat();
     console.log(data);
-    //onSubmit(data)
+    onSubmit(data);
   };
   return (
     <>
@@ -45,15 +47,24 @@ export function DrinkForm({ drink, onSubmit, onDelete }: DrinkFormProps) {
           defaultValue={drink?.name}
         />
         {errors.name && <div>{errors.name.message}</div>}
-        {data?.map((category, index) => (
-          <select {...register(`ingredients.${index}`)} key={index} multiple>
-            {category?.map((i) => (
-              <option value={i.id} key={i.id}>
-                {i.name}
-              </option>
-            ))}
-          </select>
-        ))}
+        <div className="flex">
+          {data?.map((category, index) => (
+            <div>
+              <label>{IngredientCategory[category[0].category]}</label>
+              <select
+                {...register(`ingredients.${index}`)}
+                key={index}
+                multiple
+              >
+                {category?.map((i) => (
+                  <option value={i.id} key={i.id}>
+                    {i.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+          ))}
+        </div>
         <div className="flex m-2 justify-end px-4 py-3 sm:flex">
           <ModalButtonGroup
             primaryText={drink.id === "" ? "Create Drink" : "Edit Drink"}

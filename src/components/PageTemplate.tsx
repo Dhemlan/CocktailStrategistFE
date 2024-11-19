@@ -5,14 +5,14 @@ import { IngredientPanel } from "./Ingredients/IngredientPanel";
 export function PageTemplate() {
   return (
     <>
-      <IngredientPanel />
-
       <Link to="/AddDrink">
-        <button>Add Drink</button>
+        <button className="m-1">Add Drink</button>
       </Link>
       <Link to="/AddIngredient">
-        <button>Add Ingredient</button>
+        <button className="m-1">Add Ingredient</button>
       </Link>
+
+      <IngredientPanel />
     </>
   );
 }

@@ -2,21 +2,28 @@ import { useQuery } from "@tanstack/react-query";
 import { IngredientModel } from "../../models/IngredientModel";
 import { fetchIngredients } from "../../http";
 import { Ingredient } from "./Ingredient";
+import { useNavigate } from "react-router-dom";
 
 export function IngredientPanel() {
-    const { data, isError, error } = useQuery<IngredientModel[][]>({
-        queryKey: ["ingredients"],
-        queryFn: fetchIngredients,
-      });
-      let content;
+  const { data, isError, error } = useQuery<IngredientModel[][]>({
+    queryKey: ["ingredients"],
+    queryFn: fetchIngredients,
+  });
 
-      if (data) {
-        content = 
-          data?.map(category => (
-            <ul>
-                {category.map(i => <Ingredient ingredient={i}/>) }
-            </ul>
-          ))
-        }
-    return <div>{content}</div>
+  const navigate = useNavigate();
+
+  let content;
+
+  if (data) {
+    content = data?.map((category) => (
+      <div className="flex flex-wrap" key={category[0].category}>
+        {category.map((i) => (
+          <div onClick={() => navigate("/map/" + i.id)} key={i.id}>
+            <Ingredient ingredient={i} />
+          </div>
+        ))}
+      </div>
+    ));
+  }
+  return <div>{content}</div>;
 }

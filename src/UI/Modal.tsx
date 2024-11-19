@@ -18,7 +18,6 @@ function Modal({ children, title }: ModalProps) {
   return createPortal(
     <dialog ref={dialog}>
       <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
-
       <div className="fixed inset-0 z-10">
         <div className="flex min-h-full justify-center p-4 text-center sm:items-center">
           <div className="py-5 rounded-lg bg-slate-400 shadow-xl sm:w-full sm:max-w-lg">
